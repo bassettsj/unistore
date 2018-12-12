@@ -1,4 +1,4 @@
-import { assign } from './util';
+import { assign } from './util.js';
 
 /**
  * Creates a new store, which is a tiny evented state container.

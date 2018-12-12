@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="module">
+        import createConsumer from './src/integrations/custom-element.js';
+        import createStore from './src/index.js';
+        
+        const store = createStore({ value: 'buy keefer' });
+        customElements.define('x-consumer', createConsumer(store));
+
+        const el = document.createElement('x-consumer');
+        el.appendChild(document.createElement('input'));
+        el.mapStateToProps = s => ({
+            value: s.value,
+        });
+        el.actions = { 
+            onchange: (e) => {
+                console.log(e);
+                store.setState({ value: e.target.value });
+            },
+        };
+        document.querySelector('#app').append(el);
+        store.setState();
+        window.store = store;
+    
+    </script>
+</body>
+</html>
